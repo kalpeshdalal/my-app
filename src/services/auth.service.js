@@ -37,14 +37,15 @@ const loginUserWithEmailAndPassword = async (email, password) => {
  
  
   let user = await User.findOne({ email, active: true });
+
   
-  if (user && !(user.role == 'user')) return {user:null,msg: 'User is not authorized'} ;
+  if (user && !(user.role == 'user')) {
+    return {user:null,msg: 'User is not authorized'} ;
+  }
   if (!user || !(await user.isPasswordMatch(password))) {
-    // throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+
     return {user:null,msg:'Incorrect email or password'} 
   }
-
-   
   return {user};
 };
 
